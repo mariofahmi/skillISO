@@ -53,14 +53,12 @@ Word secara bawaan dapat mengubah proporsi kolom secara acak jika hanya mengguna
    - Kolom 3 (Bobot): `0.60"` (864 dxa) — perataan tengah (`center`)
 4. **Tabel Evaluasi & Komposisi Nilai** (3 kolom, total 6.10"):
    - Kolom 0 (No): `0.55"` (792 dxa) — perataan tengah
-   - Kolom 1 (Komponen Evaluasi): `4.75"` (6.840 dxa) — perataan tengah vertikal
-   - Kolom 2 (Bobot %): `0.80"` (1.152 dxa) — perataan tengah
-5. **Tabel Standar Konversi Skala 7** (5 kolom, total 6.10"):
-   - Kolom 0 (Rentang Skor): `1.10"` (1.584 dxa)
-   - Kolom 1 (Nilai Huruf): `0.85"` (1.224 dxa)
-   - Kolom 2 (Bobot Mutu): `0.85"` (1.224 dxa)
-   - Kolom 3 (Kategori Capaian): `2.30"` (3.312 dxa)
-   - Kolom 4 (Status Kelulusan): `1.00"` (1.440 dxa)
+   - Kolom 1 (Komponen Evaluasi & Simbol): `4.55"` (6.552 dxa) — perataan tengah vertikal
+   - Kolom 2 (Bobot %): `1.00"` (1.440 dxa) — perataan tengah
+5. **Tabel Standar Konversi Nilai UNIROW** (3 kolom, total 6.10"):
+   - Kolom 0 (Interval Nilai): `2.30"` (3.312 dxa) — perataan tengah
+   - Kolom 1 (Nilai Huruf): `1.90"` (2.736 dxa) — perataan tengah
+   - Kolom 2 (Nilai Mutu): `1.90"` (2.736 dxa) — perataan tengah
 6. **Tabel Pengesahan & Tanda Tangan** (2 kolom, total 6.10"):
    - Kolom 0 (Perwakilan Mahasiswa / Komti): `3.05"` (4.392 dxa)
    - Kolom 1 (Dosen Pengampu MK): `3.05"` (4.392 dxa)
@@ -72,7 +70,7 @@ Seluruh baris tabel (`<w:tr>`) wajib disematkan tag XML `<w:cantSplit/>` pada `w
 Tabel multi-halaman (khususnya Silabus 16 Minggu) wajib menyematkan `<w:tblHeader/>` pada baris header (`hdr_row._tr.get_or_add_trPr()`) sehingga judul kolom otomatis muncul kembali di bagian atas halaman berikutnya.
 
 ### D. Perataan Vertikal Sel (`w:vAlign`)
-- Sel nomor minggu, kode, bobot, dan header menggunakan `<w:vAlign w:val="center"/>`.
+- Sel nomor minggu, kode, bobot, nilai huruf, nilai mutu, dan header menggunakan `<w:vAlign w:val="center"/>`.
 - Sel deskripsi materi dan tugas yang memiliki teks panjang menggunakan `<w:vAlign w:val="top"/>`.
 
 ### E. Kebersihan Paragraf Sel
@@ -81,7 +79,7 @@ Setiap paragraf di dalam sel tabel wajib disetel `space_before = Pt(0)` dan `spa
 ### F. Format Penataan Markdown Tables
 Di dalam berkas Markdown (`.md`), setiap kolom tabel wajib memiliki format *header alignment separator*:
 - Kolom teks: `:---|` (rata kiri).
-- Kolom angka, bobot, nilai huruf, nomor minggu: `:---:|` (rata tengah).
+- Kolom angka, bobot, nilai huruf, nilai mutu, nomor minggu: `:---:|` (rata tengah).
 
 ---
 
@@ -105,22 +103,31 @@ Setiap dokumen Kontrak Perkuliahan wajib memuat komponen berurutan sebagai berik
    - Rumusan kompetensi akhir mahasiswa bernomor urut (CPMK 1 s.d. CPMK 4).
 6. **Bagian D: Materi Pokok dan Jadwal Perkuliahan 16 Minggu**:
    - Tabel matriks 4 kolom: `Minggu` \| `Materi Pokok / Bahasan` \| `Bentuk Pembelajaran & Penugasan` \| `Bobot`.
-   - **Minggu 8** secara baku adalah **EVALUASI TENGAH SEMESTER (UTS)** (bobot 25%, shading `#F4F6F7`).
-   - **Minggu 16** secara baku adalah **EVALUASI AKHIR SEMESTER (UAS)** (bobot 25%, shading `#F4F6F7`).
-7. **Bagian E: Metode Pembelajaran dan Alokasi Beban Belajar (SN-Dikti)**:
-   - Sesuai Permendikbudristek No. 53 Tahun 2023:
-     - Tatap Muka / PB: $sks \times 50$ menit/minggu (2 SKS = 100 menit).
-     - Terstruktur / PT: $sks \times 60$ menit/minggu (2 SKS = 120 menit).
-     - Mandiri / KM: $sks \times 60$ menit/minggu (2 SKS = 120 menit).
-     - Total Beban Belajar: 340 menit (5,67 jam/minggu untuk 2 SKS).
-8. **Bagian F: Sistem Evaluasi, Bobot, dan Konversi Nilai Akhir**:
-   - Tabel Komposisi Nilai: Aktivitas Partisipatif (15%), Tugas Terstruktur & Proyek (20%), Kuis (15%), UTS (25%), UAS (25%) = Total 100%.
-   - Tabel Konversi Skala 7 Resmi UNIROW Tuban: A (85–100), B+ (75–84), B (68–74), C+ (65–67), C (56–64, batas lulus), D (40–55), E (0–39).
-9. **Bagian G: Tata Tertib dan Kesepakatan Perkuliahan**:
+   - **Minggu 8** secara baku adalah **EVALUASI TENGAH SEMESTER (UTS)** (bobot 30%, shading `#F4F6F7`).
+   - **Minggu 16** secara baku adalah **EVALUASI AKHIR SEMESTER (UAS)** (bobot 40%, shading `#F4F6F7`).
+7. **Bagian E: Sistem Evaluasi, Bobot, dan Konversi Nilai Akhir**:
+   - **Nilai Akhir (NA)**:
+     - Penilaian diperoleh dari Penilaian Presensi (P), Tugas/praktikum (TGS), Ujian Tengah Semester (UTS), dan Ujian Akhir Semester (UAS).
+     - Ketentuan perhitungan nilai akhir:
+       $$\text{NA} = \frac{\text{P} + 2(\text{TGS}) + 3(\text{UTS}) + 4(\text{UAS})}{10}$$
+     - Komposisi Bobot: Presensi 10% (P), Tugas/Praktikum 20% (TGS), UTS 30% (UTS), UAS 40% (UAS).
+   - **Distribusi Nilai Huruf & Nilai Mutu (Pedoman Akademik UNIROW)**:
+     - $85 < \text{NA} \le 100 \rightarrow \mathbf{A}$ (Nilai Mutu: 4)
+     - $77,5 < \text{NA} \le 85 \rightarrow \mathbf{AB}$ (Nilai Mutu: 3,5)
+     - $70 < \text{NA} \le 77,5 \rightarrow \mathbf{B}$ (Nilai Mutu: 3)
+     - $65 < \text{NA} \le 70 \rightarrow \mathbf{BC}$ (Nilai Mutu: 2,5)
+     - $55 < \text{NA} \le 65 \rightarrow \mathbf{C}$ (Nilai Mutu: 2)
+     - $45 < \text{NA} \le 55 \rightarrow \mathbf{D}$ (Nilai Mutu: 1)
+     - $0 < \text{NA} \le 45 \rightarrow \mathbf{E}$ (Nilai Mutu: 0)
+   - **Ketentuan Kelulusan Matakuliah**:
+     - a. Mahasiswa dinyatakan lulus matakuliah jika mendapat nilai **A, AB, B, BC, C**.
+     - b. Nilai **D** dinyatakan **tidak lulus**. Mahasiswa dengan nilai D dapat mengulang perkuliahan dengan kehadiran minimal 50% dan mengikuti ujian pada Ujian Akhir Semester (UAS) sesuai dengan ketentuan.
+     - c. Nilai **E** dinyatakan **tidak lulus**, dan mahasiswa wajib mengikuti perkuliahan pada semester berikutnya sesuai ketentuan.
+8. **Bagian F: Tata Tertib dan Kesepakatan Perkuliahan**:
    - Klausul terstruktur: Kehadiran minimal 75%, toleransi keterlambatan 15 menit, etika akademik anti-bullying, sanksi keterlambatan tugas 10%/hari, integritas bebas plagiarisme, dan syarat ujian susulan sah.
-10. **Bagian H: Pustaka Rujukan**:
-    - Pustaka Utama dan Pustaka Pendukung yang disalin persis dari RPS.
-11. **Bagian I: Pernyataan Kesepakatan dan Pengesahan**:
+9. **Bagian G: Pustaka Rujukan**:
+   - Pustaka Utama dan Pustaka Pendukung yang disalin persis dari RPS.
+10. **Bagian H: Pernyataan Kesepakatan dan Pengesahan**:
     - Kalimat kesepakatan sadar dan sukarela, tempat dan tanggal penetapan.
     - Kolom tanda tangan simetris: **Perwakilan Mahasiswa (Ketua Tingkat / Komti)** dan **Dosen Pengampu MK**.
     - Mengetahui: **Ketua Program Studi PPKn (Mario Fahmi Syahrial, M.Pd.)**.
@@ -182,10 +189,10 @@ Sebelum menyerahkan berkas kontrak perkuliahan kepada dosen atau pengguna, pasti
   - Baris judul tabel silabus 16 minggu berulang di halaman kedua (`<w:tblHeader/>`).
   - Nomor minggu, skor, bobot, dan status rata tengah vertikal (`<w:vAlign w:val="center"/>`).
 - [ ] **Silabus 16 Minggu Lengkap**: Matriks perkuliahan memuat Minggu 1 s.d. 16.
-- [ ] **Jadwal Evaluasi Baku**: Minggu ke-8 adalah **UTS** (bobot 25%) dan Minggu ke-16 adalah **UAS** (bobot 25%).
-- [ ] **Total Bobot Kumulatif**: Tepat berjumlah **100%**.
-- [ ] **Alokasi Waktu SN-Dikti**: Menghitung beban belajar berdasarkan SKS ($sks \times 170$ menit/minggu: 50 menit tatap muka, 60 menit terstruktur, 60 menit mandiri).
-- [ ] **Tabel Skala 7 UNIROW**: Mengadopsi standar penilaian Skala 7 (A, B+, B, C+, C, D, E) dengan batas minimal kelulusan 56.00 (C).
+- [ ] **Jadwal Evaluasi Baku**: Minggu ke-8 adalah **UTS** (bobot 30%) dan Minggu ke-16 adalah **UAS** (bobot 40%).
+- [ ] **Formula Nilai Akhir (NA)**: NA dihitung dari $NA = (P + 2 \cdot TGS + 3 \cdot UTS + 4 \cdot UAS) / 10$ dengan total bobot kumulatif 100%.
+- [ ] **Tabel Skala Nilai UNIROW**: Mengadopsi standar penilaian resmi Pedoman Akademik UNIROW (A: 85 < NA ≤ 100, AB: 77.5 < NA ≤ 85, B: 70 < NA ≤ 77.5, BC: 65 < NA ≤ 70, C: 55 < NA ≤ 65, D: 45 < NA ≤ 55, E: 0 < NA ≤ 45).
+- [ ] **Klausul Kelulusan Matakuliah**: Memuat aturan kelulusan (lulus: A, AB, B, BC, C; tidak lulus: D dapat mengulang dengan kehadiran min 50% & UAS; E wajib mengulang semester berikutnya).
 - [ ] **Tata Tertib Akademik**: Memuat klausul presensi minimal 75%, toleransi keterlambatan 15 menit, dan sanksi plagiarisme.
 - [ ] **Lembar Pengesahan Resmi**: Memuat kolom Komti Mahasiswa (kiri), Dosen Pengampu (kanan), dan Mengetahui Ketua Program Studi PPKn **Mario Fahmi Syahrial, M.Pd.** (bawah tengah).
 - [ ] **Kebersihan Teks**: Bebas dari karakter bintang markdown mentah (`**`) dan karakter biner tidak terduga.

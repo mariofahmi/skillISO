@@ -779,65 +779,38 @@ def build_kontrak_docx(data, output_path):
     p_tv.paragraph_format.space_after = Pt(0)
     add_paragraph_run(p_tv, "100%", font_size=9, bold=True)
 
-    # 8. Bagian E: Metode & Beban Belajar SN-Dikti
+    # 8. Bagian E: Sistem Evaluasi, Bobot, dan Konversi Nilai Akhir
     p_secE = doc.add_paragraph()
     p_secE.paragraph_format.space_before = Pt(12)
     p_secE.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_secE, "E. METODE PEMBELAJARAN DAN ALOKASI BEBAN BELAJAR", font_size=11, bold=True)
+    add_paragraph_run(p_secE, "E. SISTEM EVALUASI, BOBOT, DAN KONVERSI NILAI AKHIR", font_size=11, bold=True)
 
-    sks_val = int(data.get('sks', '2')) if str(data.get('sks', '2')).isdigit() else 2
-    tm_min = sks_val * 50
-    pt_min = sks_val * 60
-    bm_min = sks_val * 60
-    tot_min = tm_min + pt_min + bm_min
-    tot_jam = round(tot_min / 60.0, 2)
+    # 1. Nilai Akhir
+    p_na_title = doc.add_paragraph()
+    p_na_title.paragraph_format.space_after = Pt(2)
+    add_paragraph_run(p_na_title, "1. Nilai Akhir (NA)", font_size=9.5, bold=True)
 
-    p_beban_intro = doc.add_paragraph()
-    p_beban_intro.paragraph_format.line_spacing = 1.15
-    p_beban_intro.paragraph_format.space_after = Pt(4)
-    p_beban_intro.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    add_paragraph_run(p_beban_intro,
-        f"Perkuliahan diselenggarakan secara tatap muka (luring interaktif) diperkuat dengan penugasan terstruktur dan media daring. "
-        f"Sesuai Standar Nasional Pendidikan Tinggi (SN-Dikti) Permendikbudristek No. 53 Tahun 2023 untuk bobot {sks_val} SKS Teori, "
-        f"alokasi waktu belajar mahasiswa per minggu dirinci sebagai berikut:",
+    p_na_desc = doc.add_paragraph()
+    p_na_desc.paragraph_format.line_spacing = 1.15
+    p_na_desc.paragraph_format.space_after = Pt(4)
+    p_na_desc.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    add_paragraph_run(p_na_desc,
+        "Nilai Akhir (NA) diperoleh dari Penilaian Presensi (P), Tugas/praktikum (TGS), Ujian Tengah Semester (UTS), dan Ujian Akhir Semester (UAS). "
+        "Ketentuan perhitungan nilai akhir adalah sebagai berikut:\n"
+        "NA = (P + 2·TGS + 3·UTS + 4·UAS) / 10",
         font_size=9.5
     )
 
-    beban_items = [
-        f"1. Proses Belajar Tatap Muka (PB)  : {sks_val} × 50 menit = {tm_min} menit/minggu",
-        f"2. Penugasan Terstruktur (PT)       : {sks_val} × 60 menit = {pt_min} menit/minggu",
-        f"3. Kegiatan Mandiri (KM)            : {sks_val} × 60 menit = {bm_min} menit/minggu",
-        f"• Total Alokasi Beban Belajar       : {tot_min} menit ({tot_jam} jam) per minggu"
-    ]
-    for b_item in beban_items:
-        p_b = doc.add_paragraph()
-        p_b.paragraph_format.left_indent = Inches(0.2)
-        p_b.paragraph_format.line_spacing = 1.15
-        p_b.paragraph_format.space_after = Pt(2)
-        is_bold = "Total Alokasi" in b_item
-        add_paragraph_run(p_b, b_item, font_size=9.5, bold=is_bold)
-
-    # 9. Bagian F: Sistem Evaluasi & Konversi Nilai
-    p_secF = doc.add_paragraph()
-    p_secF.paragraph_format.space_before = Pt(12)
-    p_secF.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_secF, "F. SISTEM EVALUASI, BOBOT, DAN KONVERSI NILAI AKHIR", font_size=11, bold=True)
-
-    p_f1 = doc.add_paragraph()
-    p_f1.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_f1, "1. Komposisi Nilai Akhir (Standar OBE UNIROW Tuban):", font_size=9.5, bold=True)
-
     komponen_nilai = [
-        ("1", "Aktivitas Partisipatif (Keaktifan, Etika, dan Presensi)", "15%"),
-        ("2", "Tugas Terstruktur & Proyek Kolaboratif", "20%"),
-        ("3", "Kuis & Evaluasi Mingguan", "15%"),
-        ("4", "Evaluasi Tengah Semester (UTS)", "25%"),
-        ("5", "Evaluasi Akhir Semester (UAS)", "25%"),
+        ("1", "Penilaian Presensi (P)", "10%"),
+        ("2", "Tugas / Praktikum (TGS)", "20%"),
+        ("3", "Ujian Tengah Semester (UTS)", "30%"),
+        ("4", "Ujian Akhir Semester (UAS)", "40%"),
         ("", "TOTAL KOMULATIF BOBOT EVALUASI", "100%")
     ]
     tbl_eval = doc.add_table(rows=len(komponen_nilai) + 1, cols=3)
     tbl_eval.alignment = WD_TABLE_ALIGNMENT.CENTER
-    eval_col_widths = [0.55, 4.75, 0.80]
+    eval_col_widths = [0.55, 4.55, 1.00]
     set_table_col_widths(tbl_eval, eval_col_widths)
 
     set_repeat_header(tbl_eval.rows[0])
@@ -886,30 +859,31 @@ def build_kontrak_docx(data, output_path):
         p2.paragraph_format.space_after = Pt(0)
         add_paragraph_run(p2, bbt, font_size=9, bold=is_tot)
 
+    # Distribusi Nilai Huruf & Nilai Mutu (Pedoman Akademik UNIROW)
     p_f2 = doc.add_paragraph()
     p_f2.paragraph_format.space_before = Pt(8)
     p_f2.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_f2, "2. Standar Konversi Nilai Akhir (Skala 7 Resmi UNIROW Tuban):", font_size=9.5, bold=True)
+    add_paragraph_run(p_f2, "Adapun nilai hasil belajar mahasiswa dinyatakan dengan Nilai Huruf yang didistribusikan sebagai berikut:", font_size=9.5)
 
     skala_data = [
-        ("85 – 100", "A", "4.00", "Sangat Baik / Istimewa", "LULUS"),
-        ("75 – 84", "B+", "3.50", "Baik Sekali", "LULUS"),
-        ("68 – 74", "B", "3.00", "Baik", "LULUS"),
-        ("65 – 67", "C+", "2.50", "Cukup Baik", "LULUS"),
-        ("56 – 64", "C", "2.00", "Cukup (Batas Minimal Kelulusan)", "LULUS"),
-        ("40 – 55", "D", "1.00", "Kurang", "TIDAK LULUS"),
-        ("0 – 39", "E", "0.00", "Gagal / Mengulang", "TIDAK LULUS")
+        ("85 < NA ≤ 100", "A", "4"),
+        ("77,5 < NA ≤ 85", "AB", "3,5"),
+        ("70 < NA ≤ 77,5", "B", "3"),
+        ("65 < NA ≤ 70", "BC", "2,5"),
+        ("55 < NA ≤ 65", "C", "2"),
+        ("45 < NA ≤ 55", "D", "1"),
+        ("0 < NA ≤ 45", "E", "0")
     ]
 
-    tbl_skala = doc.add_table(rows=len(skala_data) + 1, cols=5)
+    tbl_skala = doc.add_table(rows=len(skala_data) + 1, cols=3)
     tbl_skala.alignment = WD_TABLE_ALIGNMENT.CENTER
-    skala_col_widths = [1.10, 0.85, 0.85, 2.30, 1.00]
+    skala_col_widths = [2.30, 1.90, 1.90]
     set_table_col_widths(tbl_skala, skala_col_widths)
 
     set_repeat_header(tbl_skala.rows[0])
     set_row_cant_split(tbl_skala.rows[0])
 
-    h_skala = ["Rentang Skor", "Nilai Huruf", "Bobot Mutu", "Kategori Capaian", "Status"]
+    h_skala = ["Interval Nilai", "Nilai Huruf", "Nilai Mutu"]
     for i, h in enumerate(h_skala):
         cell = tbl_skala.rows[0].cells[i]
         set_cell_padding(cell, 55, 55, 70, 70)
@@ -920,30 +894,47 @@ def build_kontrak_docx(data, output_path):
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_before = Pt(0)
         p.paragraph_format.space_after = Pt(0)
-        add_paragraph_run(p, h, font_size=8.5, bold=True)
+        add_paragraph_run(p, h, font_size=9, bold=True)
 
-    for idx, (skor, huruf, mutu, kat, stt) in enumerate(skala_data):
+    for idx, (skor, huruf, mutu) in enumerate(skala_data):
         row = tbl_skala.rows[idx + 1]
         set_row_cant_split(row)
-        for i_col, val in enumerate((skor, huruf, mutu, kat, stt)):
+        for i_col, val in enumerate((skor, huruf, mutu)):
             cell = row.cells[i_col]
             set_cell_padding(cell, 40, 40, 60, 60)
             set_cell_borders(cell, 'single', 'single', 'single', 'single')
             set_cell_valign(cell, 'center')
             p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p.paragraph_format.space_before = Pt(0)
             p.paragraph_format.space_after = Pt(0)
-            if i_col in (0, 1, 2, 4):
-                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             is_c = (huruf == "C")
             if is_c: set_cell_shading(cell, 'F4F6F7')
-            add_paragraph_run(p, val, font_size=8.5, bold=(i_col in (1, 4)))
+            add_paragraph_run(p, val, font_size=9, bold=(i_col == 1))
 
-    # 10. Bagian G: Tata Tertib Perkuliahan
-    p_secG = doc.add_paragraph()
-    p_secG.paragraph_format.space_before = Pt(12)
-    p_secG.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_secG, "G. TATA TERTIB DAN KESEPAKATAN PERKULIAHAN", font_size=11, bold=True)
+    # 2. Kelulusan Matakuliah
+    p_lulus_title = doc.add_paragraph()
+    p_lulus_title.paragraph_format.space_before = Pt(8)
+    p_lulus_title.paragraph_format.space_after = Pt(3)
+    add_paragraph_run(p_lulus_title, "2. Kelulusan matakuliah", font_size=9.5, bold=True)
+
+    kelulusan_poin = [
+        "a. Mahasiswa dinyatakan lulus matakuliah jika mendapat nilai A, AB, B, BC, C.",
+        "b. Nilai D dinyatakan tidak lulus. Mahasiswa dengan nilai D dapat mengulang perkuliahan dengan kehadiran minimal 50% dan mengikuti ujian pada Ujian Akhir Semester (UAS) sesuai dengan ketentuan.",
+        "c. Nilai E dinyatakan tidak lulus, dan mahasiswa wajib mengikuti perkuliahan pada semester berikutnya sesuai ketentuan."
+    ]
+    for kp in kelulusan_poin:
+        p_kp = doc.add_paragraph()
+        p_kp.paragraph_format.left_indent = Inches(0.2)
+        p_kp.paragraph_format.line_spacing = 1.15
+        p_kp.paragraph_format.space_after = Pt(2)
+        add_paragraph_run(p_kp, kp, font_size=9.5)
+
+    # 9. Bagian F: Tata Tertib Perkuliahan
+    p_secF = doc.add_paragraph()
+    p_secF.paragraph_format.space_before = Pt(12)
+    p_secF.paragraph_format.space_after = Pt(4)
+    add_paragraph_run(p_secF, "F. TATA TERTIB DAN KESEPAKATAN PERKULIAHAN", font_size=11, bold=True)
 
     aturan_list = [
         "1. Mahasiswa wajib hadir tepat waktu. Toleransi keterlambatan maksimal adalah 15 menit setelah perkuliahan dimulai.",
@@ -963,11 +954,11 @@ def build_kontrak_docx(data, output_path):
         p_a.paragraph_format.space_after = Pt(3)
         add_paragraph_run(p_a, atr, font_size=9.5)
 
-    # 11. Bagian H: Pustaka
-    p_secH = doc.add_paragraph()
-    p_secH.paragraph_format.space_before = Pt(12)
-    p_secH.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_secH, "H. PUSTAKA RUJUKAN", font_size=11, bold=True)
+    # 10. Bagian G: Pustaka
+    p_secG = doc.add_paragraph()
+    p_secG.paragraph_format.space_before = Pt(12)
+    p_secG.paragraph_format.space_after = Pt(4)
+    add_paragraph_run(p_secG, "G. PUSTAKA RUJUKAN", font_size=11, bold=True)
 
     p_pu_title = doc.add_paragraph()
     p_pu_title.paragraph_format.space_before = Pt(2)
@@ -997,11 +988,11 @@ def build_kontrak_docx(data, output_path):
         p_item.paragraph_format.line_spacing = 1.15
         add_paragraph_run(p_item, f"{i+1}. {p}", font_size=9)
 
-    # 12. Bagian I: Pengesahan & Tanda Tangan
-    p_secI = doc.add_paragraph()
-    p_secI.paragraph_format.space_before = Pt(14)
-    p_secI.paragraph_format.space_after = Pt(4)
-    add_paragraph_run(p_secI, "I. PERNYATAAN KESEPAKATAN DAN PENGESAHAN", font_size=11, bold=True)
+    # 11. Bagian H: Pengesahan & Tanda Tangan
+    p_secH = doc.add_paragraph()
+    p_secH.paragraph_format.space_before = Pt(14)
+    p_secH.paragraph_format.space_after = Pt(4)
+    add_paragraph_run(p_secH, "H. PERNYATAAN KESEPAKATAN DAN PENGESAHAN", font_size=11, bold=True)
 
     p_setuju = doc.add_paragraph()
     p_setuju.paragraph_format.line_spacing = 1.15
@@ -1073,11 +1064,6 @@ def build_kontrak_md(data, output_md_path):
     Membangun file .md Kontrak Kuliah resmi berformat GitHub-Flavored Markdown.
     """
     sks_val = int(data.get('sks', '2')) if str(data.get('sks', '2')).isdigit() else 2
-    tm_min = sks_val * 50
-    pt_min = sks_val * 60
-    bm_min = sks_val * 60
-    tot_min = tm_min + pt_min + bm_min
-    tot_jam = round(tot_min / 60.0, 2)
 
     lines = []
     lines.append("# KONTRAK PERKULIAHAN\n")
@@ -1139,42 +1125,38 @@ def build_kontrak_md(data, output_md_path):
     lines.append("| | **TOTAL BOBOT KUMULATIF PERKULIAHAN** | | **100%** |\n")
     lines.append("---\n")
 
-    # E. Beban Belajar
-    lines.append("## E. Metode Pembelajaran dan Alokasi Beban Belajar\n")
-    lines.append(f"Perkuliahan diselenggarakan secara tatap muka (luring interaktif) diperkuat dengan tugas terstruktur dan penelusuran mandiri. Sesuai Standar Nasional Pendidikan Tinggi (SN-Dikti) Permendikbudristek No. 53 Tahun 2023 untuk **{sks_val} SKS Teori**, alokasi waktu belajar mahasiswa per minggu adalah:")
-    lines.append(f"1. **Proses Belajar / Tatap Muka (PB)** : {sks_val} × 50 menit = {tm_min} menit/minggu")
-    lines.append(f"2. **Penugasan Terstruktur (PT)** : {sks_val} × 60 menit = {pt_min} menit/minggu")
-    lines.append(f"3. **Kegiatan Mandiri (KM)** : {sks_val} × 60 menit = {bm_min} menit/minggu")
-    lines.append(f"* **Total Alokasi Beban Belajar** : **{tot_min} menit ({tot_jam} jam) per minggu**\n")
+    # E. Evaluasi & Konversi Nilai Akhir
+    lines.append("## E. Sistem Evaluasi, Bobot, dan Konversi Nilai Akhir\n")
+    lines.append("### 1. Nilai Akhir (NA)")
+    lines.append("Nilai Akhir (NA) diperoleh dari Penilaian Presensi (P), Tugas/praktikum (TGS), Ujian Tengah Semester (UTS), dan Ujian Akhir Semester (UAS). Ketentuan perhitungan nilai akhir adalah sebagai berikut:\n")
+    lines.append("$$\\text{NA} = \\frac{\\text{P} + 2(\\text{TGS}) + 3(\\text{UTS}) + 4(\\text{UAS})}{10}$$\n")
+    lines.append("| No | Komponen Evaluasi | Simbol | Bobot (%) |")
+    lines.append("|:---:|:---|:---:|:---:|")
+    lines.append("| 1 | **Penilaian Presensi** | **P** | **10%** |")
+    lines.append("| 2 | **Tugas / Praktikum** | **TGS** | **20%** |")
+    lines.append("| 3 | **Ujian Tengah Semester (UTS)** | **UTS** | **30%** |")
+    lines.append("| 4 | **Ujian Akhir Semester (UAS)** | **UAS** | **40%** |")
+    lines.append("| | **TOTAL** | | **100%** |\n")
+
+    lines.append("Adapun nilai hasil belajar mahasiswa dinyatakan dengan Nilai Huruf yang didistribusikan sebagai berikut:\n")
+    lines.append("| Interval Nilai | Nilai Huruf | Nilai Mutu |")
+    lines.append("|:---:|:---:|:---:|")
+    lines.append("| 85 < NA ≤ 100 | **A** | 4 |")
+    lines.append("| 77,5 < NA ≤ 85 | **AB** | 3,5 |")
+    lines.append("| 70 < NA ≤ 77,5 | **B** | 3 |")
+    lines.append("| 65 < NA ≤ 70 | **BC** | 2,5 |")
+    lines.append("| 55 < NA ≤ 65 | **C** | 2 |")
+    lines.append("| 45 < NA ≤ 55 | **D** | 1 |")
+    lines.append("| 0 < NA ≤ 45 | **E** | 0 |\n")
+
+    lines.append("### 2. Kelulusan matakuliah")
+    lines.append("a. Mahasiswa dinyatakan lulus matakuliah jika mendapat nilai **A, AB, B, BC, C**.")
+    lines.append("b. Nilai **D** dinyatakan **tidak lulus**. Mahasiswa dengan nilai D dapat mengulang perkuliahan dengan kehadiran minimal 50% dan mengikuti ujian pada Ujian Akhir Semester (UAS) sesuai dengan ketentuan.")
+    lines.append("c. Nilai **E** dinyatakan **tidak lulus**, dan mahasiswa wajib mengikuti perkuliahan pada semester berikutnya sesuai ketentuan.\n")
     lines.append("---\n")
 
-    # F. Evaluasi & Konversi
-    lines.append("## F. Komponen dan Bobot Penilaian\n")
-    lines.append("### 1. Komposisi Nilai Akhir (Standar OBE UNIROW Tuban)\n")
-    lines.append("| No | Komponen Evaluasi | Bobot (%) | Keterangan Capaian |")
-    lines.append("|:---:|:---|:---:|:---|")
-    lines.append("| 1 | **Aktivitas Partisipatif** | **15%** | Keaktifan argumen diskusi kelas, etika akademik, dan presensi |")
-    lines.append("| 2 | **Tugas Terstruktur & Proyek Kolaboratif** | **20%** | Resume berkala, telaah yuridis, dan penyusunan modul luaran |")
-    lines.append("| 3 | **Kuis & Evaluasi Mingguan** | **15%** | Penguasaan konsep dan lembar kerja mingguan |")
-    lines.append("| 4 | **Evaluasi Tengah Semester (UTS)** | **25%** | Penguasaan materi teoretis dan instrumen (Minggu 1 s.d. 7) |")
-    lines.append("| 5 | **Evaluasi Akhir Semester (UAS)** | **25%** | Analisis komprehensif kasus dan portofolio proyek akhir |")
-    lines.append("| | **TOTAL** | **100%** | |\n")
-
-    lines.append("### 2. Standar Konversi Nilai Akhir (Skala 7 UNIROW Tuban)\n")
-    lines.append("| Interval Nilai Angka | Nilai Huruf | Angka Mutu | Kategori Capaian | Status Kelulusan |")
-    lines.append("|:---:|:---:|:---:|:---|:---:|")
-    lines.append("| 85 – 100 | **A** | 4.00 | Sangat Baik / Istimewa | **LULUS** |")
-    lines.append("| 75 – 84 | **B+** | 3.50 | Baik Sekali | **LULUS** |")
-    lines.append("| 68 – 74 | **B** | 3.00 | Baik | **LULUS** |")
-    lines.append("| 65 – 67 | **C+** | 2.50 | Cukup Baik | **LULUS** |")
-    lines.append("| 56 – 64 | **C** | 2.00 | Cukup *(Batas Minimal Kelulusan)* | **LULUS** |")
-    lines.append("| 40 – 55 | **D** | 1.00 | Kurang | **TIDAK LULUS** |")
-    lines.append("| 0 – 39 | **E** | 0.00 | Gagal / Mengulang | **TIDAK LULUS** |\n")
-    lines.append("> Mahasiswa dinyatakan **LULUS** mata kuliah ini jika memperoleh nilai akhir minimal **C (56.00)**.\n")
-    lines.append("---\n")
-
-    # G. Tata Tertib
-    lines.append("## G. Tata Tertib dan Hak-Kewajiban Perkuliahan\n")
+    # F. Tata Tertib
+    lines.append("## F. Tata Tertib dan Kesepakatan Perkuliahan\n")
     lines.append("1. **Kehadiran**: Minimal 75% dari total 16 pertemuan tatap muka sebagai syarat mutlak mengikuti Evaluasi Akhir Semester (UAS).")
     lines.append("2. **Keterlambatan**: Toleransi maksimal 15 menit. Keterlambatan lebih dari 15 menit dicatat alpa kecuali memiliki izin sah tertulis.")
     lines.append("3. **Izin/Sakit**: Surat keterangan dokter atau tugas dinas kampus wajib diserahkan maksimal 3 hari kerja setelah pertemuan.")
@@ -1185,8 +1167,8 @@ def build_kontrak_md(data, output_md_path):
     lines.append("8. **Ujian Susulan**: Hanya diberikan bagi mahasiswa dengan alasan darurat (rawat inap/dinas) dengan bukti sah tertulis.\n")
     lines.append("---\n")
 
-    # H. Pustaka
-    lines.append("## H. Pustaka Rujukan\n")
+    # G. Pustaka
+    lines.append("## G. Pustaka Rujukan\n")
     lines.append("### Pustaka Utama:")
     if data.get('pustaka_utama'):
         for i, p in enumerate(data['pustaka_utama']):
@@ -1203,8 +1185,8 @@ def build_kontrak_md(data, output_md_path):
         lines.append("1. Peraturan Perundang-undangan dan Jurnal Ilmiah Terkait.")
     lines.append("\n---\n")
 
-    # I. Pengesahan
-    lines.append("## I. Pernyataan Kesepakatan dan Pengesahan\n")
+    # H. Pengesahan
+    lines.append("## H. Pernyataan Kesepakatan dan Pengesahan\n")
     lines.append(f"Kontrak Perkuliahan ini disepakati secara sadar dan sukarela oleh Dosen Pengampu Mata Kuliah dan seluruh Mahasiswa peserta mata kuliah {data.get('nama_mk', '')} ({data.get('kode_mk', '')}) Program Studi PPKn FKIP Universitas PGRI Ronggolawe Tuban untuk ditaati bersama selama perkuliahan Semester {data.get('semester', '4')} Tahun Akademik 2026/2027.\n")
     lines.append("Dibuat dan disahkan di: **Tuban**  ")
     lines.append("Pada tanggal: ........................................ 2026  \n")

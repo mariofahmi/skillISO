@@ -18,9 +18,10 @@ Modul kecerdasan buatan (*custom skill*) untuk Google Antigravity guna menyusun,
    - **Paragraph Spacing Bersih**: `space_before = Pt(0)` dan `space_after = Pt(0)` dengan `line_spacing = 1.05`.
 
 3. **Kepatuhan Regulasi & Standar Kampus**:
-   - Alokasi beban belajar SN-Dikti Permendikbudristek No. 53 Tahun 2023.
-   - Matriks silabus 16 minggu: Minggu 8 = UTS (25%), Minggu 16 = UAS (25%), total bobot tepat 100%.
-   - Standar Penilaian Skala 7 Resmi UNIROW (A s.d. E, batas kelulusan C 56.00).
+   - Formula Nilai Akhir: $\text{NA} = (\text{P} + 2\cdot\text{TGS} + 3\cdot\text{UTS} + 4\cdot\text{UAS}) / 10$.
+   - Matriks silabus 16 minggu: Minggu 8 = UTS (30%), Minggu 16 = UAS (40%), total bobot tepat 100%.
+   - Standar Penilaian Skala Resmi UNIROW: A (4), AB (3,5), B (3), BC (2,5), C (2, batas lulus), D (1, tidak lulus), E (0, tidak lulus).
+   - Klausul kelulusan dan aturan mengulang perkuliahan resmi Pedoman Akademik UNIROW.
    - Pengesahan Tripartit resmi (Komti Mahasiswa, Dosen Pengampu, dan Ketua Program Studi).
 
 ---
