@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README - Dokumentasi Skill Kontrak Perkuliahan OBE | Standar ISO</title>
+  <meta name="description" content="Dokumentasi resmi README Skill Kontrak Perkuliahan OBE Kurikulum 2026 berstandar ISO UNIROW Tuban untuk Google Antigravity.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Docs Layout */
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 40px;
+      padding: 40px 0 80px;
+    }
+
+    .docs-sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      padding-right: 16px;
+    }
+
+    .toc-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      display: block;
+      border-left: 2px solid transparent;
+    }
+
+    .toc-link:hover, .toc-link.active {
+      color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.08);
+      border-left-color: var(--accent-primary);
+    }
+
+    /* Article Content */
+    .docs-article {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .docs-header {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+
+    .docs-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .docs-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .docs-lead {
+      font-size: 1.12rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Markdown Typography */
+    .markdown-body h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 40px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .markdown-body h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 28px 0 14px;
+      color: var(--text-primary);
+    }
+
+    .markdown-body h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 20px 0 10px;
+    }
+
+    .markdown-body p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 24px;
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+    }
+
+    .markdown-body li {
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+
+    .markdown-body strong {
+      color: var(--text-primary);
+    }
+
+    .markdown-body code:not(pre code) {
+      font-family: var(--font-mono);
+      background: rgba(99, 102, 241, 0.12);
+      color: #38bdf8;
+      padding: 3px 7px;
+      border-radius: 5px;
+      font-size: 0.88rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .code-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .code-wrapper pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    .btn-code-copy {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-code-copy:hover {
+      background: var(--accent-primary);
+      color: #ffffff;
+      border-color: var(--accent-primary);
+    }
+
+    /* Callout Alert */
+    .callout {
+      background: rgba(99, 102, 241, 0.08);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 18px 22px;
+      margin: 24px 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .callout p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+    }
+
+    /* Back Link Button */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: var(--transition);
+    }
+
+    .btn-back:hover {
+      color: var(--accent-primary);
+      transform: translateX(-4px);
+    }
+
+    @media (max-width: 900px) {
+      .docs-layout {
+        grid-template-columns: 1fr;
+      }
+      .docs-sidebar {
+        display: none;
+      }
+      .docs-article {
+        padding: 24px;
+      }
+      .docs-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand">
+        <img src="assets/logo_unirow.png" alt="Logo UNIROW" class="brand-logo" onerror="this.style.display='none'">
+        <span>SkillISO</span>
+        <span class="brand-badge">README</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">← Kembali ke Beranda</a></li>
+        <li><a href="index.html#katalog">Katalog 63 MK</a></li>
+        <li><a href="index.html#standar-iso">Standar Mutu ISO</a></li>
+        <li><a href="index.html#pratinjau">Pratinjau Format</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme" type="button">
+          <!-- Moon Icon SVG -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <a href="https://github.com/mariofahmi/skillISO" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <main class="container docs-layout">
+    <!-- Sidebar TOC -->
+    <aside class="docs-sidebar">
+      <div class="toc-title">Daftar Isi README</div>
+      <ul class="toc-list">
+        <li><a href="#ringkasan" class="toc-link">📌 Ringkasan Skill</a></li>
+        <li><a href="#fitur-utama" class="toc-link">🌟 Fitur Utama</a></li>
+        <li><a href="#struktur-berkas" class="toc-link">📁 Struktur Berkas</a></li>
+        <li><a href="#prasyarat-instalasi" class="toc-link">🚀 Prasyarat & Instalasi</a></li>
+        <li><a href="#cara-penggunaan" class="toc-link">💻 Cara Penggunaan</a></li>
+        <li><a href="#lisensi-kontributor" class="toc-link">📄 Lisensi & Kontributor</a></li>
+      </ul>
+
+      <div style="margin-top: 30px; padding: 18px; background: rgba(99, 102, 241, 0.08); border: 1px solid var(--border-glow); border-radius: var(--radius-md);">
+        <h5 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: #a5b4fc;">🔗 Tautan Cepat</h5>
+        <a href="index.html#katalog" style="display: block; font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin-bottom: 6px;">→ Katalog 63 Mata Kuliah</a>
+        <a href="https://github.com/mariofahmi/skillISO" target="_blank" style="display: block; font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;">→ Repositori GitHub</a>
+      </div>
+    </aside>
+
+    <!-- Content Article -->
+    <article class="docs-article markdown-body">
+      <a href="index.html" class="btn-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Kembali ke Halaman Beranda
+      </a>
+
+      <!-- Header Section -->
+      <header id="ringkasan" class="docs-header">
+        <div class="docs-badge">
+          <span>Google Antigravity Custom Skill v1.0</span>
+        </div>
+        <h1 class="docs-title">Kontrak Perkuliahan OBE - Antigravity Skill</h1>
+        <p class="docs-lead">
+          Modul kecerdasan buatan (<em>custom skill</em>) untuk Google Antigravity guna menyusun, menata, dan menerbitkan dokumen 
+          <strong>Kontrak Perkuliahan</strong> resmi berstandar kurikulum <strong>OBE (<em>Outcome-Based Education</em>)</strong> 
+          perguruan tinggi Indonesia (spesifik standar mutu Universitas PGRI Ronggolawe Tuban) secara otomatis dari dokumen RPS (<em>Rencana Pembelajaran Semester</em>).
+        </p>
+      </header>
+
+      <!-- Section: Fitur Utama -->
+      <section id="fitur-utama">
+        <h2>🌟 Fitur Utama</h2>
+
+        <h3>1. Universal RPS Parser</h3>
+        <ul>
+          <li>Mendukung input dokumen RPS baik format Word (<code>.docx</code>) maupun Markdown (<code>.md</code>).</li>
+          <li>Ekstraksi otomatis identitas mata kuliah, dosen pengampu, koordinator RMK, kaprodi, deskripsi, CPMK 1–4, silabus 16 minggu, beban belajar SN-Dikti, dan pustaka rujukan.</li>
+        </ul>
+
+        <h3>2. Penataan Tabel Word XML Mutakhir (Advanced Formatting)</h3>
+        <ul>
+          <li><strong>Lebar Kolom Absolut (<code>w:tblGrid</code> & <code>w:tcW w:type="dxa"</code>)</strong>: Terkunci presisi 6.10 inci sesuai batas cetak A4 Portrait.</li>
+          <li><strong>Anti-Split Baris (<code>&lt;w:cantSplit/&gt;</code>)</strong>: Mencegah baris tabel terpotong canggung saat pergantian halaman.</li>
+          <li><strong>Repeating Header (<code>&lt;w:tblHeader/&gt;</code>)</strong>: Baris judul tabel silabus 16 minggu berulang otomatis di halaman kedua.</li>
+          <li><strong>Perataan Vertikal Sel (<code>&lt;w:vAlign/&gt;</code>)</strong>: Rata tengah vertikal untuk nomor, kode, skor, bobot %, dan rata atas untuk materi/tugas multiline.</li>
+          <li><strong>Paragraph Spacing Bersih</strong>: <code>space_before = Pt(0)</code> dan <code>space_after = Pt(0)</code> dengan <code>line_spacing = 1.05</code>.</li>
+        </ul>
+
+        <h3>3. Kepatuhan Regulasi & Standar Kampus</h3>
+        <ul>
+          <li>Alokasi beban belajar SN-Dikti Permendikbudristek No. 53 Tahun 2023.</li>
+          <li>Matriks silabus 16 minggu: Minggu 8 = UTS (30%), Minggu 16 = UAS (30%), total bobot tepat 100%.</li>
+          <li>Standar Penilaian Skala 7 Resmi UNIROW (A s.d. E, batas kelulusan C 56.00).</li>
+          <li>Pengesahan Tripartit resmi (Komti Mahasiswa, Dosen Pengampu, dan Ketua Program Studi).</li>
+        </ul>
+
+        <div class="callout">
+          <div class="callout-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            Jaminan Presisi Dokumen Word
+          </div>
+          <p>
+            Dengan rekayasa XML tingkat rendah, dokumen hasil ekspor dijamin tidak akan mengalami pembagian baris ganjil atau pelebaran tabel yang melebihi batas margin kertas A4.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section: Struktur Berkas -->
+      <section id="struktur-berkas">
+        <h2>📁 Struktur Berkas Repository</h2>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard(this.nextElementSibling.innerText, this)">Salin Struktur</button>
+<pre><code>kontrak-kuliah-rps/
+├── SKILL.md                          # Panduan & metadata agen Antigravity
+├── README.md                         # Dokumentasi repository
+├── assets/
+│   └── logo_unirow.png               # Logo resmi institusi untuk KOP Word
+├── references/
+│   ├── template-kontrak.md           # Acuan anatomi kontrak perkuliahan
+│   └── cek-konsistensi.md            # Panduan QA & checklist validasi
+└── scripts/
+    ├── build_kontrak.py              # Generator per berkas RPS tunggal (.docx & .md)
+    └── batch_generate_all.py         # Batch generator untuk seluruh semester</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Prasyarat & Instalasi -->
+      <section id="prasyarat-instalasi">
+        <h2>🚀 Prasyarat & Instalasi</h2>
+
+        <h3>1. Prasyarat Sistem</h3>
+        <ul>
+          <li>Python 3.8 atau lebih baru.</li>
+          <li>Library <code>python-docx</code>:</li>
+        </ul>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard('pip install python-docx', this)">Salin</button>
+<pre><code>pip install python-docx</code></pre>
+        </div>
+
+        <h3>2. Cara Pemasangan di Antigravity</h3>
+
+        <h4>Opsi A: Pasang pada Proyek Tertentu (Workspace Specific)</h4>
+        <p>Buka terminal di root proyek Anda, lalu clone ke folder <code>.agents/skills/</code>:</p>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard('git clone https://github.com/mariofahmi/skillISO.git .agents/skills/kontrak-kuliah-rps', this)">Salin</button>
+<pre><code>git clone https://github.com/mariofahmi/skillISO.git .agents/skills/kontrak-kuliah-rps</code></pre>
+        </div>
+
+        <h4>Opsi B: Pasang Secara Global (Berlaku untuk Semua Proyek)</h4>
+        <p>Clone ke folder konfigurasi global Antigravity:</p>
+        <ul>
+          <li>
+            <strong>Windows (PowerShell)</strong>:
+            <div class="code-wrapper">
+              <button class="btn-code-copy" onclick="copyToClipboard('git clone https://github.com/mariofahmi/skillISO.git \"$env:USERPROFILE\\.gemini\\config\\skills\\kontrak-kuliah-rps\"', this)">Salin</button>
+<pre><code>git clone https://github.com/mariofahmi/skillISO.git "$env:USERPROFILE\.gemini\config\skills\kontrak-kuliah-rps"</code></pre>
+            </div>
+          </li>
+          <li>
+            <strong>Linux / macOS</strong>:
+            <div class="code-wrapper">
+              <button class="btn-code-copy" onclick="copyToClipboard('git clone https://github.com/mariofahmi/skillISO.git ~/.gemini/config/skills/kontrak-kuliah-rps', this)">Salin</button>
+<pre><code>git clone https://github.com/mariofahmi/skillISO.git ~/.gemini/config/skills/kontrak-kuliah-rps</code></pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section: Cara Penggunaan -->
+      <section id="cara-penggunaan">
+        <h2>💻 Cara Penggunaan</h2>
+
+        <h3>1. Melalui Chat AI Antigravity</h3>
+        <p>Cukup instruksikan agen di obrolan Antigravity:</p>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard('/kontrak-kuliah-rps Tolong susun kontrak perkuliahan dari dokumen RPS mata kuliah Pancasila', this)">Salin Prompt</button>
+<pre><code>/kontrak-kuliah-rps Tolong susun kontrak perkuliahan dari dokumen RPS mata kuliah Pancasila</code></pre>
+        </div>
+
+        <h3>2. Melalui Baris Perintah (CLI Langsung)</h3>
+        <p>Hasilkan berkas Word (<code>.docx</code>) dan Markdown (<code>.md</code>) dari berkas RPS tunggal:</p>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard('py \".agents\\skills\\kontrak-kuliah-rps\\scripts\\build_kontrak.py\" \"path/ke/RPS.docx\" --both', this)">Salin</button>
+<pre><code>py ".agents\skills\kontrak-kuliah-rps\scripts\build_kontrak.py" "path/ke/RPS.docx" --both</code></pre>
+        </div>
+
+        <p>Atau jalankan batch generator untuk seluruh RPS di folder kurikulum:</p>
+        <div class="code-wrapper">
+          <button class="btn-code-copy" onclick="copyToClipboard('py \".agents\\skills\\kontrak-kuliah-rps\\scripts\\batch_generate_all.py\"', this)">Salin</button>
+<pre><code>py ".agents\skills\kontrak-kuliah-rps\scripts\batch_generate_all.py"</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Lisensi & Kontributor -->
+      <section id="lisensi-kontributor">
+        <h2>📄 Lisensi & Kontributor</h2>
+        <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 22px;">
+          <p style="margin-bottom: 8px;">
+            <strong>Pengembang:</strong> Mario Fahmi Syahrial, M.Pd.
+          </p>
+          <p style="margin-bottom: 8px;">
+            <strong>Afiliasi:</strong> Program Studi Pendidikan Pancasila dan Kewarganegaraan (PPKn), FKIP, Universitas PGRI Ronggolawe (UNIROW) Tuban
+          </p>
+          <p style="margin-bottom: 0;">
+            <strong>Kompatibilitas Sistem:</strong> Google Antigravity, Antigravity 2.0, Cursor IDE, Claude Code
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer container">
+    <p style="margin-bottom: 8px;">
+      <strong>Skill Kontrak Perkuliahan Kurikulum OBE 2026</strong> — Standar Penataan Dokumen ISO
+    </p>
+    <p>
+      <a href="index.html">Halaman Utama</a> • 
+      <a href="https://github.com/mariofahmi/skillISO" target="_blank" rel="noopener noreferrer">Repositori GitHub</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
