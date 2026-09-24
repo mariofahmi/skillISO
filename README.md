@@ -1,6 +1,6 @@
 # Kontrak Perkuliahan OBE - Antigravity Skill
 
-Modul kecerdasan buatan (*custom skill*) untuk Google Antigravity guna menyusun, menata, dan menerbitkan dokumen **Kontrak Perkuliahan** resmi berstandar kurikulum **OBE (*Outcome-Based Education*)** perguruan tinggi Indonesia (spesifik standar mutu Universitas PGRI Ronggolawe Tuban) secara otomatis dari dokumen RPS (*Rencana Pembelajaran Semester*).
+Artificial intelligence module (custom skill) for Google Antigravity to automatically compile, format, and publish official Course Contract documents compliant with the OBE (Outcome-Based Education) curriculum standards of Indonesian higher education institutions (specifically the quality standards of Universitas PGRI Ronggolawe Tuban) directly from RPS (Semester Learning Plan) documents).
 
 ---
 
