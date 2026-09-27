@@ -1,4 +1,4 @@
-// Data 63 Mata Kuliah PPKN OBE 2026 UNIROW (Enriched from RPS & Contract Documents)
+﻿// Data 63 Mata Kuliah PPKN OBE 2026 UNIROW (Enriched from RPS & Contract Documents)
 const COURSES_DATA = [
   {
     "no": 1,
@@ -1924,7 +1924,27 @@ document.addEventListener('DOMContentLoaded', () => {
 // SIMULATOR & GENERATOR KONTRAK PERKULIAHAN
 // ==========================================================================
 
+function populateHeroCourseSelect() {
+  const heroSelect = document.getElementById('heroCourseSelect');
+  if (!heroSelect || typeof COURSES_DATA === 'undefined') return;
+  heroSelect.innerHTML = '<option value="" disabled selected>-- Pilih Mata Kuliah untuk Langsung Dilihat di Pratinjau --</option>' + 
+    COURSES_DATA.map((c, i) => `<option value="${i}">${c.no}. ${c.name} (${c.sks} SKS · Sem ${c.sem} · ${c.code})</option>`).join('');
+}
+function heroJumpToPreview(idx) {
+  if (idx === '' || idx === null || idx === undefined) return;
+  selectCourseAndScroll(parseInt(idx, 10));
+}
+function heroJumpBtnClick() {
+  const heroSelect = document.getElementById('heroCourseSelect');
+  if (heroSelect && heroSelect.value !== '') {
+    selectCourseAndScroll(parseInt(heroSelect.value, 10));
+  } else {
+    const pElem = document.getElementById('pratinjau');
+    if (pElem) pElem.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 function initSimulator() {
+  populateHeroCourseSelect();
   populateCourseSelect(COURSES_DATA);
   const selectElem = document.getElementById('courseSelect');
   if (selectElem) {

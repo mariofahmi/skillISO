@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -1408,7 +1408,259 @@ body {
 }
 
 
-  </style>
+  
+/* ==========================================================================
+   ENHANCED USER-FRIENDLY PREVIEW NAVIGATION & ACCESS SYSTEM
+   ========================================================================== */
+
+/* Navbar Preview CTA Button */
+.btn-nav-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  color: #ffffff !important;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+.btn-nav-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.7);
+  color: #ffffff !important;
+}
+
+/* Sticky Quick Jump Bar */
+.sticky-quick-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  background: rgba(11, 15, 25, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 9px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: var(--transition);
+}
+[data-theme="light"] .sticky-quick-nav {
+  background: rgba(248, 250, 252, 0.96);
+  border-bottom-color: rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+}
+.quick-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: none;
+}
+.quick-nav-container::-webkit-scrollbar { display: none; }
+.quick-nav-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.quick-nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 15px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+.quick-nav-item:hover {
+  color: var(--text-primary);
+  border-color: var(--border-glow);
+  transform: translateY(-1px);
+}
+.quick-nav-item.highlight {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.55);
+  font-weight: 800;
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.25);
+}
+[data-theme="light"] .quick-nav-item.highlight {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.14));
+  color: #4f46e5;
+  border-color: rgba(99, 102, 241, 0.45);
+}
+
+/* Hero Quick Course Select Box */
+.hero-quick-preview-box {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(99, 102, 241, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin: 28px auto 24px;
+  max-width: 840px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25), 0 0 25px rgba(99, 102, 241, 0.18);
+  text-align: left;
+}
+.hqp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.hqp-title {
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hqp-tag {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10b981;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 9999px;
+}
+.hqp-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hqp-select {
+  flex: 1;
+  min-width: 270px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 11px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.hqp-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+.btn-hqp-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 11px 22px;
+  border-radius: var(--radius-md);
+  font-weight: 800;
+  font-size: 0.92rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  transition: var(--transition);
+}
+.btn-hqp-jump:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+/* Floating Action Button (FAB) */
+.fab-preview {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 0.92rem;
+  text-decoration: none;
+  box-shadow: 0 8px 28px rgba(99, 102, 241, 0.6), 0 0 0 1.5px rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fabGlow 3s infinite alternate;
+}
+.fab-preview:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.8);
+}
+@keyframes fabGlow {
+  0% { box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5); }
+  100% { box-shadow: 0 12px 34px rgba(236, 72, 153, 0.7); }
+}
+
+/* Catalog Banner to Preview */
+.catalog-preview-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.12));
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.cpb-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+.cpb-left span {
+  color: var(--text-secondary);
+}
+.btn-cpb-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-glow);
+  color: #818cf8;
+  padding: 7px 18px;
+  border-radius: 9999px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn-cpb-jump:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+</style>
 </head>
 <body>
 
@@ -3962,7 +4214,27 @@ document.addEventListener('DOMContentLoaded', () => {
 // SIMULATOR & GENERATOR KONTRAK PERKULIAHAN
 // ==========================================================================
 
+function populateHeroCourseSelect() {
+  const heroSelect = document.getElementById('heroCourseSelect');
+  if (!heroSelect || typeof COURSES_DATA === 'undefined') return;
+  heroSelect.innerHTML = '<option value="" disabled selected>-- Pilih Mata Kuliah untuk Langsung Dilihat di Pratinjau --</option>' + 
+    COURSES_DATA.map((c, i) => `<option value="${i}">${c.no}. ${c.name} (${c.sks} SKS · Sem ${c.sem} · ${c.code})</option>`).join('');
+}
+function heroJumpToPreview(idx) {
+  if (idx === '' || idx === null || idx === undefined) return;
+  selectCourseAndScroll(parseInt(idx, 10));
+}
+function heroJumpBtnClick() {
+  const heroSelect = document.getElementById('heroCourseSelect');
+  if (heroSelect && heroSelect.value !== '') {
+    selectCourseAndScroll(parseInt(heroSelect.value, 10));
+  } else {
+    const pElem = document.getElementById('pratinjau');
+    if (pElem) pElem.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 function initSimulator() {
+  populateHeroCourseSelect();
   populateCourseSelect(COURSES_DATA);
   const selectElem = document.getElementById('courseSelect');
   if (selectElem) {
