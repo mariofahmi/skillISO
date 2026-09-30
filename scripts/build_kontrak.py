@@ -208,7 +208,8 @@ def parse_rps_md(md_path):
     dp_m = re.search(r'###?\s*Dosen\s+Pengampu[^\n]*\n+([^\n#]+)', text, re.IGNORECASE)
     if dp_m:
         val = clean_name(dp_m.group(1).lstrip('-* '))
-        if val: data['dosen_pengampu'] = val
+        if val and not data.get('dosen_pengampu'):
+            data['dosen_pengampu'] = val
 
     ms_m = re.search(r'###?\s*Mata\s*kuliah\s+Syarat[^\n]*\n+([^\n#]+)', text, re.IGNORECASE)
     if ms_m:
@@ -385,8 +386,47 @@ def parse_rps_docx(docx_path):
             if sks_m: data['sks'] = sks_m.group(1)
             data['semester'] = r3[6]
 
-    # Row 5: Otorisasi
-    if len(t0.rows) > 5:
+    # Otorisasi Dosen Pengembang RPS, Koordinator RMK, Kaprodi
+    pengembang_found = ""
+    for t in doc.tables:
+        for r_idx, row in enumerate(t.rows):
+            for c_idx, cell in enumerate(row.cells):
+                txt = cell.text.strip().replace('\n', ' ')
+                if txt in ["Pengembang RPS", "Dosen Pengembang RPS", "Dosen Pengembang", "Penyusun"]:
+                    if r_idx + 1 < len(t.rows):
+                        val = t.rows[r_idx + 1].cells[c_idx].text.strip()
+                        lines = [l.strip() for l in val.split('\n') if l.strip()]
+                        for l in lines:
+                            if not any(k in l for k in ["NIDN", "Tanda Tangan", "Nama Dosen", "Pengembang RPS"]):
+                                pengembang_found = clean_name(l)
+                                break
+                    if not pengembang_found:
+                        lines = [l.strip() for l in cell.text.split('\n') if l.strip()]
+                        if len(lines) > 1:
+                            for l in lines[1:]:
+                                if not any(k in l for k in ["NIDN", "Tanda Tangan"]):
+                                    pengembang_found = clean_name(l)
+                                    break
+                if "Koordinator RMK" in txt:
+                    if r_idx + 1 < len(t.rows):
+                        val = t.rows[r_idx + 1].cells[c_idx].text.strip()
+                        lines = [l.strip() for l in val.split('\n') if l.strip()]
+                        for l in lines:
+                            if not any(k in l for k in ["NIDN", "Tanda Tangan"]):
+                                data['koordinator_rmk'] = clean_name(l)
+                                break
+                if any(k in txt for k in ["Ketua PRODI", "Ketua Program Studi", "Kaprodi"]):
+                    if r_idx + 1 < len(t.rows):
+                        val = t.rows[r_idx + 1].cells[c_idx].text.strip()
+                        lines = [l.strip() for l in val.split('\n') if l.strip()]
+                        for l in lines:
+                            if not any(k in l for k in ["NIDN", "Tanda Tangan"]):
+                                data['ka_prodi'] = clean_name(l)
+                                break
+
+    if pengembang_found:
+        data['dosen_pengampu'] = pengembang_found
+    elif len(t0.rows) > 5:
         r5 = [clean_name(c.text) for c in t0.rows[5].cells]
         if len(r5) >= 7:
             if r5[2]: data['dosen_pengampu'] = r5[2]
@@ -428,7 +468,9 @@ def parse_rps_docx(docx_path):
     # Row 18: Dosen Pengampu & Row 19: Prasyarat
     if len(t0.rows) > 18:
         dp_cell = t0.rows[18].cells[1].text.strip()
-        if dp_cell: data['dosen_pengampu'] = clean_name(dp_cell)
+        # Hanya gunakan Row 18 jika dosen_pengampu belum terisi dari Pengembang RPS
+        if dp_cell and not data.get('dosen_pengampu'):
+            data['dosen_pengampu'] = clean_name(dp_cell)
 
     if len(t0.rows) > 19:
         ms_cell = t0.rows[19].cells[1].text.strip()
